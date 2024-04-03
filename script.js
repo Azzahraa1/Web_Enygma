@@ -37,6 +37,29 @@ fetch("https://api.enygma.id/v1/datasets/getdata/enygma_guibjx", requestOptions)
   })
 
 
+  /*JADWAL MEETING*/
+  fetch("https://api.enygma.id/v1/datasets/getdata/enygma_guibjx", requestOptions)
+  .then((res) => res.json())
+  .then(res => {
+    const data = res.data;
+    let rows = '';
+    data.forEach(users => {
+      rows += `<tr> 
+           <td> ${users.custom_unique_id}</td>
+            <td> ${users.data_date}</td>
+            <td> ${users.jam}</td>
+            <td> ${users.yang_dituju}</td>
+            <td> ${users.lokasi}</td>
+            <td> ${users.ruangan}</td>
+            <td> ${users.perihal}</td>
+    </tr>`
+    })
+    console.log(rows)
+    document.getElementById('meeting').innerHTML = rows;
+
+  })
+
+
 /*PEGAWAI CUTI*/
 fetch("https://api.enygma.id/v1/datasets/getdata/enygma_wbeswrro", requestOptions)
   .then((response) => response.json())
@@ -106,40 +129,58 @@ fetch("https://api.enygma.id/v1/datasets/getdata/enygma_iwmvyll", requestOptions
     let content = "";
 
     responseData.forEach(anggota => {
-      const base64Image = `data:image/jpeg;base64,${anggota.image}`;
+      fetch(`https://api.enygma.id/v1/download?extname=${anggota.image}`, {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer 84a7b02e6a5b1803c8cce51b66da0da951fd8136"
+        }
+      })
+        .then((response) => response.arrayBuffer())
+        .then((buffer) => {
+          console.log(buffer);
+          const base64Image = `data:image/png;base64,${arrayBufferToBase64(buffer)}`;
 
+          content += `
+          <div class="crd">
+              <div class="imgBx" id="img">
+              <img src="${base64Image}" alt="">
+              </div>
+              <div class="cont">
+                  <div class="details">
+                      <div id="detail">
+                      <h2>${anggota.nama}<br><span>${anggota.asal_sekolah}</span></h2></div>
+                      <div id="dt" class="data">
+                        <h5>Mulai<br><span>${anggota.mulai}</span></h5>
+                        <h5>Selesai<br><span>${anggota.selesai}</span></h5>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        `;
 
-      content += `
-        <div class="crd">
-            <div class="imgBx" id="img">
-            <img src="${base64Image}" alt="">
-            </div>
-            <div class="cont">
-                <div class="details">
-                    <div id="detail">
-                    <h2>${anggota.nama}<br><span>${anggota.asal_sekolah}</span></h2></div>
-                    <div id="dt" class="data">
-                      <h5>Mulai<br><span>${anggota.mulai}</span></h5>
-                      <h5>Selesai<br><span>${anggota.selesai}</span></h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-      `
+          document.querySelector(".kontainer").innerHTML = content;
+        })
+        .catch(error => console.error('Error fetching image:', error));
     });
-
-    document.querySelector(".kontainer").innerHTML = content;
   })
-  
+  .catch(error => console.error('Error fetching data:', error));
 
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
 
 /*FAQ*/
-  fetch("https://api.enygma.id/v1/datasets/getdata/enygma_btfsgrnxpj", requestOptions)
+fetch("https://api.enygma.id/v1/datasets/getdata/enygma_btfsgrnxpj", requestOptions)
   .then((response) => response.json())
   .then(result => {
     const data = result.data;
     let acc = '';
-    data.forEach(faq =>{
+    data.forEach(faq => {
       acc += `
       <details>
       <summary>${faq.title}</summary>
