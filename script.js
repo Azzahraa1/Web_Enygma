@@ -1,7 +1,7 @@
 new DataTable('#example');
 
 const myHeaders = new Headers();
-myHeaders.append("Authorization", "Bearer 84a7b02e6a5b1803c8cce51b66da0da951fd8136");
+myHeaders.append("Authorization", "Bearer ");
 
 const requestOptions = {
   method: "GET",
@@ -10,7 +10,7 @@ const requestOptions = {
 };
 
 /*JANJI TEMU*/
-fetch("https://api.enygma.id/v1/datasets/getdata/enygma_guibjx", requestOptions)
+fetch("", requestOptions)
   .then((res) => res.json())
   .then(res => {
     const data = res.data;
@@ -38,7 +38,7 @@ fetch("https://api.enygma.id/v1/datasets/getdata/enygma_guibjx", requestOptions)
 
 
   /*JADWAL MEETING*/
-  fetch("https://api.enygma.id/v1/datasets/getdata/enygma_guibjx", requestOptions)
+  fetch("", requestOptions)
   .then((res) => res.json())
   .then(res => {
     const data = res.data;
@@ -61,7 +61,7 @@ fetch("https://api.enygma.id/v1/datasets/getdata/enygma_guibjx", requestOptions)
 
 
 /*PEGAWAI CUTI*/
-fetch("https://api.enygma.id/v1/datasets/getdata/enygma_wbeswrro", requestOptions)
+fetch("", requestOptions)
   .then((response) => response.json())
   .then(result => {
     const datas = result.data;
@@ -81,7 +81,7 @@ fetch("https://api.enygma.id/v1/datasets/getdata/enygma_wbeswrro", requestOption
 
 
 /*PEGAWAI LEMBUR*/
-fetch("https://api.enygma.id/v1/datasets/getdata/enygma_snrowszxx", requestOptions)
+fetch("", requestOptions)
   .then((response) => response.json())
   .then(result => {
     const data = result.data;
@@ -101,7 +101,7 @@ fetch("https://api.enygma.id/v1/datasets/getdata/enygma_snrowszxx", requestOptio
   })
 
 /*PEGAWAI TELAT*/
-fetch("https://api.enygma.id/v1/datasets/getdata/enygma_fullafoq", requestOptions)
+fetch("", requestOptions)
   .then((response) => response.json())
   .then(result => {
     const data = result.data;
@@ -121,7 +121,7 @@ fetch("https://api.enygma.id/v1/datasets/getdata/enygma_fullafoq", requestOption
 
 
 /* ANGGOTA*/
-fetch("https://api.enygma.id/v1/datasets/getdata/enygma_iwmvyll", requestOptions)
+fetch("", requestOptions)
   .then((response) => response.json())
   .then(result => {
     console.log("result: " + JSON.stringify(result.data));
@@ -129,10 +129,10 @@ fetch("https://api.enygma.id/v1/datasets/getdata/enygma_iwmvyll", requestOptions
     let content = "";
 
     responseData.forEach(anggota => {
-      fetch(`https://api.enygma.id/v1/download?extname=${anggota.image}`, {
+      fetch(`=${anggota.image}`, {
         method: "POST",
         headers: {
-          "Authorization": "Bearer 84a7b02e6a5b1803c8cce51b66da0da951fd8136"
+          "Authorization": "Bearer "
         }
       })
         .then((response) => response.arrayBuffer())
@@ -175,7 +175,7 @@ function arrayBufferToBase64(buffer) {
 }
 
 /*FAQ*/
-fetch("https://api.enygma.id/v1/datasets/getdata/enygma_btfsgrnxpj", requestOptions)
+fetch("", requestOptions)
   .then((response) => response.json())
   .then(result => {
     const data = result.data;
